@@ -28,7 +28,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login(Login::class)
-            ->brandName(fn () => setting('site_name', __('app.ensemble_calendar')))
+            ->brandName(fn () => config('app.name'))
             ->colors([
                 'primary' => Color::Sky,
             ])
