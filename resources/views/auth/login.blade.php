@@ -6,7 +6,7 @@
     <section class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-700 text-white">
         <div class="mx-auto max-w-6xl px-4 py-16">
             <div class="max-w-3xl">
-                <p class="uppercase tracking-[0.25em] text-xs text-slate-300 mb-3">{{ __('app.ensemble') }}</p>
+                <p class="uppercase tracking-[0.25em] text-xs text-slate-300 mb-3">{{ setting('site_name', __('app.ensemble')) }}</p>
                 <h1 class="text-3xl md:text-4xl font-semibold mb-4">{{ __('app.login_title') }}</h1>
                 <p class="text-slate-200">{{ __('app.login_subtitle') }}</p>
             </div>

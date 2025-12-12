@@ -74,4 +74,13 @@ return [
     'data_deletion_contact' => 'Kontaktdaten stehen im Impressum.',
     'cookie_consent_message' => 'Wir setzen nur ein Session-Cookie fürs Login und ein Consent-Cookie, damit dieser Hinweis ausgeblendet bleibt.',
     'accept' => 'Okay',
+    'settings' => 'Einstellungen',
+    'navigation_system' => 'System',
+    'general_settings' => 'Allgemeine Einstellungen',
+    'site_name' => 'Seitenname',
+    'site_name_helper' => 'Der Name deines Ensembles oder deiner Organisation, der auf der gesamten Seite angezeigt wird',
+    'imprint_company' => 'Firmen-/Organisationsname',
+    'imprint_address' => 'Adresse',
+    'imprint_contact' => 'Kontaktinformationen',
+    'settings_saved' => 'Einstellungen erfolgreich gespeichert',
 ];

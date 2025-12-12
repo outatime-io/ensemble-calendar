@@ -15,7 +15,7 @@
                     EC
                 </div>
                 <div>
-                    <div class="text-sm uppercase tracking-[0.2em] text-slate-500">{{ __('app.ensemble') }}</div>
+                    <div class="text-sm uppercase tracking-[0.2em] text-slate-500">{{ setting('site_name', __('app.ensemble')) }}</div>
                     <div class="text-lg font-semibold text-slate-900">{{ config('app.name') }}</div>
                 </div>
             </div>

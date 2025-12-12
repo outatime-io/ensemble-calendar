@@ -74,4 +74,13 @@ return [
     'data_deletion_contact' => 'Contact details are listed in the imprint.',
     'cookie_consent_message' => 'We only set a session cookie for login and a consent cookie so this banner stays hidden.',
     'accept' => 'Accept',
+    'settings' => 'Settings',
+    'navigation_system' => 'System',
+    'general_settings' => 'General settings',
+    'site_name' => 'Site name',
+    'site_name_helper' => 'The name of your ensemble or organization displayed across the site',
+    'imprint_company' => 'Company/Organization name',
+    'imprint_address' => 'Address',
+    'imprint_contact' => 'Contact information',
+    'settings_saved' => 'Settings saved successfully',
 ];

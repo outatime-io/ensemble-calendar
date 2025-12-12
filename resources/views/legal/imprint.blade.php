@@ -12,8 +12,20 @@
     <section class="-mt-10 pb-16">
         <div class="mx-auto max-w-5xl px-4">
             <div class="bg-white rounded-3xl shadow-xl shadow-slate-200/60 border border-slate-100 p-8 space-y-4 leading-relaxed text-slate-800">
-                <p><strong>{{ __('app.operator') }}</strong><br>
-                    {{ __('app.operator_placeholder') }}</p>
+                @if(setting('imprint_company') || setting('imprint_address') || setting('imprint_contact'))
+                    @if(setting('imprint_company'))
+                        <p><strong>{{ setting('imprint_company') }}</strong></p>
+                    @endif
+                    @if(setting('imprint_address'))
+                        <p class="whitespace-pre-line">{{ setting('imprint_address') }}</p>
+                    @endif
+                    @if(setting('imprint_contact'))
+                        <p class="whitespace-pre-line">{{ setting('imprint_contact') }}</p>
+                    @endif
+                @else
+                    <p><strong>{{ __('app.operator') }}</strong><br>
+                        {{ __('app.operator_placeholder') }}</p>
+                @endif
                 <p class="text-sm text-slate-600">{{ __('app.imprint_footer') }}</p>
             </div>
         </div>

@@ -7,7 +7,7 @@
         <div class="mx-auto max-w-6xl px-4 py-14 md:py-16">
             <div class="grid gap-8 md:grid-cols-2 md:items-end">
                 <div class="space-y-4">
-                    <p class="uppercase tracking-[0.25em] text-xs text-slate-200">{{ __('app.ensemble') }}</p>
+                    <p class="uppercase tracking-[0.25em] text-xs text-slate-200">{{ setting('site_name', __('app.ensemble')) }}</p>
                     <h1 class="text-3xl md:text-4xl font-semibold leading-tight">{{ __('app.calendar_title') }}</h1>
                     <p class="text-slate-100 text-lg">{{ __('app.calendar_subtitle') }}</p>
                     <div class="flex flex-wrap gap-3">
