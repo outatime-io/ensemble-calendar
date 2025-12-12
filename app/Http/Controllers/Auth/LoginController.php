@@ -19,7 +19,7 @@ class LoginController extends Controller
     public function login(Request $request): RedirectResponse
     {
         $credentials = $request->validate([
-            'email' => ['required', 'email'],
+            'username' => ['required', 'string'],
             'password' => ['required', 'string'],
         ]);
 
@@ -27,9 +27,9 @@ class LoginController extends Controller
 
         if (! Auth::attempt($credentials, $remember)) {
             return back()
-                ->withInput($request->only('email'))
+                ->withInput($request->only('username'))
                 ->withErrors([
-                    'email' => __('auth.failed'),
+                    'username' => __('auth.failed'),
                 ]);
         }
 

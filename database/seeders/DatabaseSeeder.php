@@ -23,12 +23,14 @@ class DatabaseSeeder extends Seeder
             ->admin()
             ->create([
                 'name' => 'Admin',
+                'username' => env('ADMIN_USERNAME', 'admin'),
                 'email' => env('ADMIN_EMAIL', 'admin@example.com'),
                 'password' => Hash::make($adminPassword),
             ]);
 
         User::factory()->create([
             'name' => 'Ensemble Login',
+            'username' => env('ENSEMBLE_USERNAME', 'ensemble'),
             'email' => env('ENSEMBLE_EMAIL', 'ensemble@example.com'),
             'password' => Hash::make($ensemblePassword),
         ]);

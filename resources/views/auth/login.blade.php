@@ -20,8 +20,8 @@
                     @csrf
                     <div class="grid gap-4 md:grid-cols-2">
                         <label class="form-field">
-                            <span class="form-label">{{ __('app.email') }}</span>
-                            <input type="email" name="email" value="{{ old('email') }}" autocomplete="email"
+                            <span class="form-label">{{ __('app.username') }}</span>
+                            <input type="text" name="username" value="{{ old('username') }}" autocomplete="username"
                                    class="input" required autofocus>
                         </label>
                         <label class="form-field">

@@ -21,6 +21,7 @@ class User extends Authenticatable implements FilamentUser
      */
     protected $fillable = [
         'name',
+        'username',
         'role',
         'email',
         'password',
@@ -63,5 +64,10 @@ class User extends Authenticatable implements FilamentUser
     public function isEnsemble(): bool
     {
         return $this->role === UserRole::Ensemble;
+    }
+
+    public function username(): string
+    {
+        return 'username';
     }
 }
