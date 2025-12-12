@@ -12,6 +12,7 @@ class CalendarController extends Controller
         $rehearsals = Rehearsal::query()
             ->with(['days' => fn ($query) => $query->orderBy('rehearsal_date')->orderBy('starts_at')])
             ->published()
+            ->where('end_date', '>=', today())
             ->orderBy('start_date')
             ->get();
 

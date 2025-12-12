@@ -43,6 +43,7 @@ class RehearsalForm
                             ->helperText(__('app.published_hint')),
                     ]),
                 Section::make(__('app.schedule'))
+                    ->description(__('app.past_rehearsals_hidden_hint'))
                     ->schema([
                         Repeater::make('days')
                             ->relationship('days')

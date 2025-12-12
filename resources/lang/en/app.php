@@ -87,4 +87,8 @@ return [
     'imprint_address' => 'Address',
     'imprint_contact' => 'Contact information',
     'settings_saved' => 'Settings saved successfully',
+    'all' => 'All',
+    'upcoming' => 'Upcoming',
+    'past' => 'Past',
+    'past_rehearsals_hidden_hint' => 'Past rehearsals (where the end date has passed) are automatically hidden from the public calendar and feed.',
 ];

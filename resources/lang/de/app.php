@@ -87,4 +87,8 @@ return [
     'imprint_address' => 'Adresse',
     'imprint_contact' => 'Kontaktinformationen',
     'settings_saved' => 'Einstellungen erfolgreich gespeichert',
+    'all' => 'Alle',
+    'upcoming' => 'Bevorstehend',
+    'past' => 'Vergangen',
+    'past_rehearsals_hidden_hint' => 'Vergangene Proben (deren Enddatum überschritten ist) werden automatisch im öffentlichen Kalender und Feed ausgeblendet.',
 ];
