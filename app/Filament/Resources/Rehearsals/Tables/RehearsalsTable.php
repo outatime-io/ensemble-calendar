@@ -6,6 +6,8 @@ use App\Models\Rehearsal;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\Action;
+use Filament\Notifications\Notification;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TernaryFilter;
@@ -51,6 +53,21 @@ class RehearsalsTable
             ])
             ->recordActions([
                 EditAction::make(),
+                Action::make('copy')
+                    ->label(__('app.copy_rehearsal'))
+                    ->icon('heroicon-o-document-duplicate')
+                    ->requiresConfirmation()
+                    ->action(function (Rehearsal $record) {
+                        $copy = $record->createCopy();
+
+                        Notification::make()
+                            ->success()
+                            ->title(__('app.rehearsal_copied'))
+                            ->body(__('app.rehearsal_copied_message'))
+                            ->send();
+
+                        return redirect()->route('filament.admin.resources.rehearsals.edit', ['record' => $copy]);
+                    }),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

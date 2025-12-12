@@ -93,4 +93,30 @@ class Rehearsal extends Model
 
         return $this->start_date->translatedFormat('d.m.') . ' – ' . $this->end_date->translatedFormat('d.m.Y');
     }
+
+    public function createCopy(): self
+    {
+        $copy = $this->replicate([
+            'plan_path',
+            'ics_uid',
+        ]);
+
+        $copy->is_published = false;
+        $copy->created_by = auth()?->id();
+
+        unset($copy->days_count);
+
+        $copy->save();
+
+        foreach ($this->days as $day) {
+            $copy->days()->create([
+                'rehearsal_date' => $day->rehearsal_date,
+                'starts_at' => $day->starts_at,
+                'ends_at' => $day->ends_at,
+                'notes' => $day->notes,
+            ]);
+        }
+
+        return $copy;
+    }
 }
