@@ -11,9 +11,6 @@
     <header class="border-b border-slate-200 bg-white/80 backdrop-blur">
         <div class="mx-auto max-w-6xl px-4 py-4 flex items-center justify-between gap-4">
             <div class="flex items-center gap-3">
-                <div class="h-10 w-10 rounded-xl bg-gradient-to-br from-sky-500 to-indigo-500 shadow-md shadow-sky-200 flex items-center justify-center text-white font-semibold">
-                    EC
-                </div>
                 <div>
                     <div class="text-sm uppercase tracking-[0.2em] text-slate-500">{{ setting('site_name', __('app.ensemble')) }}</div>
                     <div class="text-lg font-semibold text-slate-900">{{ config('app.name') }}</div>
