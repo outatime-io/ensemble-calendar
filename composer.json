@@ -2,8 +2,8 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
-    "license": "proprietary",
+    "keywords": ["laravel", "framework", "filament", "admin panel", "calendar", "rehearsal calendar", "rehearsal management", "rehearsal schedules", "musical ensemble", "ensemble", "theater"],
+    "license": "MIT",
     "require": {
         "php": "^8.2",
         "filament/filament": "^4.0",
