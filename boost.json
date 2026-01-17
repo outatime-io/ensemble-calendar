@@ -1,0 +1,14 @@
+{
+    "agents": [
+        "codex",
+        "copilot",
+        "phpstorm"
+    ],
+    "editors": [
+        "codex",
+        "phpstorm"
+    ],
+    "guidelines": [
+        "filament/filament"
+    ]
+}
