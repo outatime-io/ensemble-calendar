@@ -85,6 +85,23 @@ class Rehearsal extends Model
         );
     }
 
+    public static function publishedCached(): Collection
+    {
+        $ttlMinutes = (int) config('calendar.cache_ttl_minutes', 15);
+
+        return Cache::remember(
+            calendar_feed_rehearsals_cache_key(),
+            now()->addMinutes($ttlMinutes),
+            function (): Collection {
+                return self::query()
+                    ->with(['days' => fn ($query) => $query->orderBy('rehearsal_date')->orderBy('starts_at')])
+                    ->published()
+                    ->orderBy('start_date')
+                    ->get();
+            }
+        );
+    }
+
     public function refreshDateRangeFromDays(): void
     {
         $first = $this->days()->orderBy('rehearsal_date')->first();

@@ -22,7 +22,7 @@ class CalendarFeedController extends Controller
             calendar_feed_cache_key(),
             now()->addMinutes($ttlMinutes),
             function (): string {
-                $rehearsals = Rehearsal::upcomingCached();
+                $rehearsals = Rehearsal::publishedCached();
 
                 return self::renderFeed($rehearsals);
             }

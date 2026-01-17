@@ -34,6 +34,13 @@ if (! function_exists('calendar_rehearsals_cache_key')) {
     }
 }
 
+if (! function_exists('calendar_feed_rehearsals_cache_key')) {
+    function calendar_feed_rehearsals_cache_key(): string
+    {
+        return 'calendar.feed-rehearsals.v'.calendar_cache_version();
+    }
+}
+
 if (! function_exists('calendar_feed_cache_key')) {
     function calendar_feed_cache_key(): string
     {

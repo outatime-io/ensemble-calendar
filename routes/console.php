@@ -13,7 +13,7 @@ Artisan::command('inspire', function () {
 Artisan::command('calendar:cache', function () {
     calendar_bump_cache_version();
 
-    $rehearsals = Rehearsal::upcomingCached();
+    $rehearsals = Rehearsal::publishedCached();
     $feed = CalendarFeedController::renderFeed($rehearsals);
     $ttlMinutes = (int) config('calendar.feed_ttl_minutes', 60);
 
