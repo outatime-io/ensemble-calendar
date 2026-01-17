@@ -6,6 +6,8 @@ use App\Models\Rehearsal;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 
 class CalendarFeedController extends Controller
 {
@@ -15,13 +17,25 @@ class CalendarFeedController extends Controller
 
         abort_unless(is_string($feedToken) && hash_equals($feedToken, $token), 404);
 
-        $rehearsals = Rehearsal::query()
-            ->with(['days' => fn ($query) => $query->orderBy('rehearsal_date')->orderBy('starts_at')])
-            ->published()
-            ->where('end_date', '>=', today())
-            ->orderBy('start_date')
-            ->get();
+        $ttlMinutes = (int) config('calendar.feed_ttl_minutes', 60);
+        $feed = Cache::remember(
+            calendar_feed_cache_key(),
+            now()->addMinutes($ttlMinutes),
+            function (): string {
+                $rehearsals = Rehearsal::upcomingCached();
 
+                return self::renderFeed($rehearsals);
+            }
+        );
+
+        return response($feed, 200, [
+            'Content-Type' => 'text/calendar; charset=utf-8',
+            'Content-Disposition' => 'attachment; filename="ensemble-calendar.ics"',
+        ]);
+    }
+
+    public static function renderFeed(Collection $rehearsals): string
+    {
         $lines = [
             'BEGIN:VCALENDAR',
             'VERSION:2.0',
@@ -47,13 +61,13 @@ class CalendarFeedController extends Controller
                 ])->filter()->implode('\\n');
 
                 $lines[] = 'BEGIN:VEVENT';
-                $lines[] = 'UID:'.$this->escape($rehearsal->ics_uid.'-'.$day->rehearsal_date->format('Ymd'));
-                $lines[] = 'SUMMARY:'.$this->escape($rehearsal->title);
+                $lines[] = 'UID:'.self::escape($rehearsal->ics_uid.'-'.$day->rehearsal_date->format('Ymd'));
+                $lines[] = 'SUMMARY:'.self::escape($rehearsal->title);
                 $lines[] = 'DTSTART;TZID='.$rehearsal->timezone.':'.$start->format('Ymd\THis');
                 $lines[] = 'DTEND;TZID='.$rehearsal->timezone.':'.$end->format('Ymd\THis');
                 $lines[] = 'DTSTAMP:'.$generatedAt;
-                $lines[] = 'LOCATION:'.$this->escape($location);
-                $lines[] = 'DESCRIPTION:'.$this->escape($descriptionLines);
+                $lines[] = 'LOCATION:'.self::escape($location);
+                $lines[] = 'DESCRIPTION:'.self::escape($descriptionLines);
                 $lines[] = 'URL;VALUE=URI:'.url(route('calendar.index', absolute: false));
                 $lines[] = 'END:VEVENT';
             }
@@ -61,13 +75,10 @@ class CalendarFeedController extends Controller
 
         $lines[] = 'END:VCALENDAR';
 
-        return response(implode("\r\n", $lines), 200, [
-            'Content-Type' => 'text/calendar; charset=utf-8',
-            'Content-Disposition' => 'attachment; filename="ensemble-calendar.ics"',
-        ]);
+        return implode("\r\n", $lines);
     }
 
-    private function escape(string $value): string
+    private static function escape(string $value): string
     {
         return str_replace(
             ['\\', ';', ',', "\n", "\r"],

@@ -26,10 +26,12 @@ class RehearsalDay extends Model
     protected static function booted(): void
     {
         static::saved(function (self $day) {
+            calendar_bump_cache_version();
             $day->rehearsal?->refreshDateRangeFromDays();
         });
 
         static::deleted(function (self $day) {
+            calendar_bump_cache_version();
             $day->rehearsal?->refreshDateRangeFromDays();
         });
     }

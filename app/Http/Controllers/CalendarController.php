@@ -9,12 +9,7 @@ class CalendarController extends Controller
 {
     public function index(): View
     {
-        $rehearsals = Rehearsal::query()
-            ->with(['days' => fn ($query) => $query->orderBy('rehearsal_date')->orderBy('starts_at')])
-            ->published()
-            ->where('end_date', '>=', today())
-            ->orderBy('start_date')
-            ->get();
+        $rehearsals = Rehearsal::upcomingCached();
 
         $feedToken = config('calendar.feed_token');
         $feedUrl = $feedToken ? route('calendar.feed', ['token' => $feedToken]) : null;

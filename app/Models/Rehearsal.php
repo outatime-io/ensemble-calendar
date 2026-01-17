@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 class Rehearsal extends Model
@@ -42,7 +43,12 @@ class Rehearsal extends Model
         });
 
         static::saved(function (self $rehearsal) {
+            calendar_bump_cache_version();
             $rehearsal->refreshDateRangeFromDays();
+        });
+
+        static::deleted(function (self $rehearsal) {
+            calendar_bump_cache_version();
         });
     }
 
@@ -59,6 +65,24 @@ class Rehearsal extends Model
     public function scopePublished($query)
     {
         return $query->where('is_published', true);
+    }
+
+    public static function upcomingCached(): Collection
+    {
+        $ttlMinutes = (int) config('calendar.cache_ttl_minutes', 15);
+
+        return Cache::remember(
+            calendar_rehearsals_cache_key(),
+            now()->addMinutes($ttlMinutes),
+            function (): Collection {
+                return self::query()
+                    ->with(['days' => fn ($query) => $query->orderBy('rehearsal_date')->orderBy('starts_at')])
+                    ->published()
+                    ->where('end_date', '>=', today())
+                    ->orderBy('start_date')
+                    ->get();
+            }
+        );
     }
 
     public function refreshDateRangeFromDays(): void
@@ -83,7 +107,7 @@ class Rehearsal extends Model
 
     public function dateRangeLabel(): string
     {
-        if (!$this->start_date || !$this->end_date) {
+        if (! $this->start_date || ! $this->end_date) {
             return '';
         }
 
@@ -91,7 +115,7 @@ class Rehearsal extends Model
             return $this->start_date->translatedFormat('d.m.Y');
         }
 
-        return $this->start_date->translatedFormat('d.m.') . ' – ' . $this->end_date->translatedFormat('d.m.Y');
+        return $this->start_date->translatedFormat('d.m.').' – '.$this->end_date->translatedFormat('d.m.Y');
     }
 
     public function createCopy(): self
