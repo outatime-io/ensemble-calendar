@@ -53,11 +53,15 @@ class CalendarFeedController extends Controller
                 $start = $day->startDateTime($rehearsal->timezone);
                 $end = $day->endDateTime($rehearsal->timezone);
                 $location = trim($rehearsal->location_name.($rehearsal->location_address ? ', '.$rehearsal->location_address : ''));
-                $planUrl = $rehearsal->plan_path ? route('rehearsals.plan', $rehearsal, absolute: true) : null;
+                $feedToken = config('calendar.feed_token');
+                $planUrl = $rehearsal->plan_path
+                    ? route('rehearsals.plan', ['rehearsal' => $rehearsal, 'token' => $feedToken], absolute: true)
+                    : null;
                 $descriptionLines = collect([
                     $rehearsal->notes,
-                    $day->notes,
-                    $planUrl ? __('app.rehearsal_plan_pdf').': '.$planUrl : null,
+                    config('calendar.feed_plan_in_description') && $planUrl
+                        ? __('app.rehearsal_plan_pdf').': '.$planUrl
+                        : null,
                 ])->filter()->implode('\\n');
 
                 $lines[] = 'BEGIN:VEVENT';
@@ -68,7 +72,10 @@ class CalendarFeedController extends Controller
                 $lines[] = 'DTSTAMP:'.$generatedAt;
                 $lines[] = 'LOCATION:'.self::escape($location);
                 $lines[] = 'DESCRIPTION:'.self::escape($descriptionLines);
-                $lines[] = 'URL;VALUE=URI:'.url(route('calendar.index', absolute: false));
+                if ($planUrl) {
+                    $lines[] = 'ATTACH;VALUE=URI:'.$planUrl;
+                }
+                $lines[] = 'URL;VALUE=URI:'.route('calendar.index', absolute: true);
                 $lines[] = 'END:VEVENT';
             }
         }

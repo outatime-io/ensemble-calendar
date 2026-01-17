@@ -6,9 +6,9 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Repeater;
-use Filament\Forms\Components\TimePicker;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\TimePicker;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -69,7 +69,7 @@ class RehearsalForm
                                     ->label(__('app.notes'))
                                     ->rows(2)
                                     ->columnSpanFull()
-                                    ->helperText(__('app.day_notes_hint')),
+                                    ->helperText(__('app.day_notes_hint').' '.__('app.day_notes_public_hint')),
                             ])
                             ->columnSpanFull(),
                     ])
@@ -89,10 +89,10 @@ class RehearsalForm
                             ->label(__('app.notes'))
                             ->rows(4)
                             ->placeholder(__('app.notes_placeholder'))
+                            ->helperText(__('app.notes_public_hint'))
                             ->columnSpanFull(),
                     ])
                     ->columnSpanFull(),
             ]);
     }
-
 }

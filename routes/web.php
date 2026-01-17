@@ -14,10 +14,10 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/', fn () => redirect()->route('calendar.index'))->name('home');
     Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
-    Route::get('/rehearsals/{rehearsal}/plan', [RehearsalPlanController::class, 'show'])->name('rehearsals.plan');
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 });
 
+Route::get('/rehearsals/{rehearsal}/plan', [RehearsalPlanController::class, 'show'])->name('rehearsals.plan');
 Route::get('/calendar/feed/{token}', CalendarFeedController::class)->name('calendar.feed');
 
 Route::view('/imprint', 'legal.imprint')->name('legal.imprint');
