@@ -20,15 +20,15 @@
                     <p class="text-sm text-slate-100 mb-4">{{ __('app.ics_instructions') }}</p>
                     @if($feedUrl)
                         <div class="flex flex-col gap-3">
-                            <div class="bg-white/20 text-slate-900 rounded-2xl p-3 flex items-center gap-3">
+                            <div class="bg-white/20 text-slate-900 rounded-2xl p-3 flex flex-col gap-3 sm:flex-row sm:items-center">
                                 <input type="text" readonly value="{{ $feedUrl }}"
-                                       class="flex-1 bg-transparent text-sm font-mono text-white/90 focus:outline-none"
+                                       class="flex-1 min-w-0 w-full bg-transparent text-sm font-mono text-white/90 focus:outline-none truncate"
                                        id="ics-url">
                                 <button type="button"
                                         data-copy-target="#ics-url"
                                         data-default-text="{{ __('app.copy_link') }}"
                                         data-copied-text="{{ __('app.copied') }}"
-                                        class="nav-pill bg-white text-slate-900 hover:bg-slate-100">
+                                        class="nav-pill w-full bg-white text-slate-900 hover:bg-slate-100 sm:w-auto">
                                     {{ __('app.copy_link') }}
                                 </button>
                             </div>
@@ -48,42 +48,42 @@
         </div>
     </section>
 
-    <section class="-mt-12 pb-16">
+    <section class="-mt-8 pb-16 sm:-mt-12">
         <div class="mx-auto max-w-6xl px-4">
             @if($rehearsals->isEmpty())
-                <div class="bg-white rounded-3xl shadow-xl shadow-slate-200/60 border border-slate-100 p-10 text-center">
+                <div class="bg-white rounded-3xl shadow-xl shadow-slate-200/60 border border-slate-100 p-6 text-center sm:p-10">
                     <p class="text-xl font-semibold text-slate-900 mb-2">{{ __('app.no_rehearsals_title') }}</p>
                     <p class="text-slate-600">{{ __('app.no_rehearsals_body') }}</p>
                 </div>
             @else
                 <div class="grid gap-6">
                     @foreach($rehearsals as $rehearsal)
-                        <article class="bg-white rounded-3xl shadow-lg shadow-slate-200/60 border border-slate-100 p-6 md:p-7">
-                            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                                <div>
+                        <article class="bg-white rounded-3xl shadow-lg shadow-slate-200/60 border border-slate-100 p-5 sm:p-6 md:p-7">
+                            <div class="flex flex-col gap-4 sm:gap-6 md:flex-row md:items-start md:justify-between">
+                                <div class="space-y-1">
                                     <p class="text-sm uppercase tracking-[0.2em] text-slate-500">{{ __('app.rehearsal') }}</p>
                                     <h2 class="text-2xl font-semibold text-slate-900">{{ $rehearsal->title }}</h2>
-                                    <p class="text-slate-700">{{ $rehearsal->location_name }}</p>
+                                    <p class="text-slate-700 break-words">{{ $rehearsal->location_name }}</p>
                                     @if($rehearsal->location_address)
-                                        <p class="text-sm text-slate-500">{{ $rehearsal->location_address }}</p>
+                                        <p class="text-sm text-slate-500 break-words">{{ $rehearsal->location_address }}</p>
                                     @endif
                                 </div>
-                                <div class="flex items-center gap-3">
-                                    <div class="tag text-slate-900 bg-slate-100 border border-slate-200">
+                                <div class="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:gap-3">
+                                    <div class="tag w-full justify-center text-slate-900 bg-slate-100 border border-slate-200 sm:w-auto">
                                         {{ $rehearsal->dateRangeLabel() }}
                                     </div>
                                     @if($rehearsal->plan_path)
-                                        <a href="{{ route('rehearsals.plan', $rehearsal) }}" class="nav-pill" target="_blank" rel="noopener">
+                                        <a href="{{ route('rehearsals.plan', $rehearsal) }}" class="nav-pill w-full sm:w-auto" target="_blank" rel="noopener">
                                             {{ __('app.download_plan') }}
                                         </a>
                                     @else
-                                        <span class="text-sm text-slate-500">{{ __('app.no_plan_uploaded') }}</span>
+                                        <span class="text-sm text-slate-500 text-center sm:text-left">{{ __('app.no_plan_uploaded') }}</span>
                                     @endif
                                 </div>
                             </div>
 
-                            <div class="mt-4 grid gap-3 md:grid-cols-2">
-                                <div class="rounded-2xl border border-slate-100 bg-slate-50/60 p-5">
+                            <div class="mt-4 grid gap-4 md:grid-cols-2 md:gap-6">
+                                <div class="rounded-2xl border border-slate-100 bg-slate-50/60 p-4 sm:p-5">
                                     <h3 class="text-sm font-semibold text-slate-700 mb-3">{{ __('app.daily_schedule') }}</h3>
                                     <div class="space-y-2">
                                         @foreach($rehearsal->days as $day)
@@ -95,13 +95,13 @@
                                                     </div>
                                                 </div>
                                                 @if($day->notes)
-                                                    <div class="text-sm text-slate-600 leading-relaxed">{{ $day->notes }}</div>
+                                                    <div class="border-t border-slate-100 pt-2 text-sm text-slate-600 leading-relaxed">{{ $day->notes }}</div>
                                                 @endif
                                             </div>
                                         @endforeach
                                     </div>
                                 </div>
-                                <div class="rounded-2xl border border-slate-100 bg-slate-50/60 p-4">
+                                <div class="rounded-2xl border border-slate-100 bg-slate-50/60 p-4 sm:p-5">
                                     <h3 class="text-sm font-semibold text-slate-700 mb-3">{{ __('app.notes') }}</h3>
                                     @if($rehearsal->notes)
                                         <p class="text-slate-700 leading-relaxed whitespace-pre-line">{{ $rehearsal->notes }}</p>
