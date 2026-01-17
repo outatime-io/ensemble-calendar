@@ -11,8 +11,6 @@
                     <h1 class="text-3xl md:text-4xl font-semibold leading-tight">{{ __('app.calendar_title') }}</h1>
                     <p class="text-slate-100 text-lg">{{ __('app.calendar_subtitle') }}</p>
                     <div class="flex flex-wrap gap-3">
-                        <span class="tag">{{ __('app.pdf_ready') }}</span>
-                        <span class="tag">{{ __('app.sync_ready') }}</span>
                     </div>
                 </div>
                 <div class="bg-white/10 border border-white/20 rounded-3xl p-6 shadow-xl shadow-slate-900/20 backdrop-blur">
