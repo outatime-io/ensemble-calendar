@@ -81,6 +81,8 @@ return [
     'cookie_consent_message' => 'We only set a session cookie for login and a consent cookie so this banner stays hidden.',
     'accept' => 'Accept',
     'settings' => 'Settings',
+    'admin_panel' => 'Administration',
+    'open_calendar' => 'Open calendar',
     'navigation_system' => 'System',
     'general_settings' => 'General settings',
     'site_name' => 'Site name',

@@ -21,6 +21,11 @@
                     <a href="{{ route('calendar.index') }}" class="nav-link">{{ __('app.calendar') }}</a>
                 @endauth
                 @auth
+                    @if (auth()->user()?->isAdmin())
+                        <a href="{{ route('filament.admin.pages.dashboard') }}" class="nav-link">{{ __('app.admin_panel') }}</a>
+                    @endif
+                @endauth
+                @auth
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" class="nav-pill">{{ __('app.logout') }}</button>

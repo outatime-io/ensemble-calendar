@@ -81,6 +81,8 @@ return [
     'cookie_consent_message' => 'Wir setzen nur ein Session-Cookie fürs Login und ein Consent-Cookie, damit dieser Hinweis ausgeblendet bleibt.',
     'accept' => 'Okay',
     'settings' => 'Einstellungen',
+    'admin_panel' => 'Verwaltung',
+    'open_calendar' => 'Zum Kalender',
     'navigation_system' => 'System',
     'general_settings' => 'Allgemeine Einstellungen',
     'site_name' => 'Seitenname',
