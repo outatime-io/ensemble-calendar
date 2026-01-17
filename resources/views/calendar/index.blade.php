@@ -11,6 +11,18 @@
                     <h1 class="text-3xl md:text-4xl font-semibold leading-tight">{{ __('app.calendar_title') }}</h1>
                     <p class="text-slate-100 text-lg">{{ __('app.calendar_subtitle') }}</p>
                     <div class="flex flex-wrap gap-3">
+                        <a href="{{ route('calendar.index') }}"
+                           class="nav-pill {{ $view === 'upcoming' ? 'bg-slate-900 text-white border-slate-900 hover:bg-slate-800' : '' }}">
+                            {{ __('app.upcoming') }}
+                        </a>
+                        <a href="{{ route('calendar.index', ['view' => 'past']) }}"
+                           class="nav-pill {{ $view === 'past' ? 'bg-slate-900 text-white border-slate-900 hover:bg-slate-800' : '' }}">
+                            {{ __('app.past') }}
+                        </a>
+                        <a href="{{ route('calendar.index', ['view' => 'all']) }}"
+                           class="nav-pill {{ $view === 'all' ? 'bg-slate-900 text-white border-slate-900 hover:bg-slate-800' : '' }}">
+                            {{ __('app.all') }}
+                        </a>
                     </div>
                 </div>
                 <div class="bg-white/10 border border-white/20 rounded-3xl p-6 shadow-xl shadow-slate-900/20 backdrop-blur">

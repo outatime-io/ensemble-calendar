@@ -102,6 +102,24 @@ class Rehearsal extends Model
         );
     }
 
+    public static function pastPublishedCached(): Collection
+    {
+        $ttlMinutes = (int) config('calendar.cache_ttl_minutes', 15);
+
+        return Cache::remember(
+            calendar_past_rehearsals_cache_key(),
+            now()->addMinutes($ttlMinutes),
+            function (): Collection {
+                return self::query()
+                    ->with(['days' => fn ($query) => $query->orderBy('rehearsal_date')->orderBy('starts_at')])
+                    ->published()
+                    ->where('end_date', '<', today())
+                    ->orderByDesc('start_date')
+                    ->get();
+            }
+        );
+    }
+
     public function refreshDateRangeFromDays(): void
     {
         $first = $this->days()->orderBy('rehearsal_date')->first();
