@@ -34,5 +34,7 @@ class DatabaseSeeder extends Seeder
             'email' => env('ENSEMBLE_EMAIL', 'ensemble@example.com'),
             'password' => Hash::make($ensemblePassword),
         ]);
+
+        $this->call(RehearsalSeeder::class);
     }
 }
