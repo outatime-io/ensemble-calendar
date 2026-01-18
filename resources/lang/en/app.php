@@ -103,5 +103,5 @@ return [
     'all' => 'All',
     'upcoming' => 'Upcoming',
     'past' => 'Past',
-    'past_rehearsals_hidden_hint' => 'Past rehearsals (where the end date has passed) are automatically hidden from the public calendar and feed.',
+    'past_rehearsals_hidden_hint' => 'Past rehearsals (where the end date has passed) remain visible under Past/All in the public calendar and stay in the feed.',
 ];

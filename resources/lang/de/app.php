@@ -103,5 +103,5 @@ return [
     'all' => 'Alle',
     'upcoming' => 'Bevorstehend',
     'past' => 'Vergangen',
-    'past_rehearsals_hidden_hint' => 'Vergangene Proben (deren Enddatum überschritten ist) werden automatisch im öffentlichen Kalender und Feed ausgeblendet.',
+    'past_rehearsals_hidden_hint' => 'Vergangene Proben (deren Enddatum überschritten ist) bleiben im öffentlichen Kalender unter Vergangen/Alle sichtbar und sind im Feed enthalten.',
 ];
