@@ -37,6 +37,7 @@ return [
     'schedule' => 'Ablauf',
     'rehearsal_days' => 'Probentage',
     'add_rehearsal_day' => 'Tag hinzufügen',
+    'add_rehearsal' => 'Neue Probe',
     'date' => 'Datum',
     'date_range' => 'Zeitraum',
     'start_time' => 'Beginn',

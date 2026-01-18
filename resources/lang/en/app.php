@@ -37,6 +37,7 @@ return [
     'schedule' => 'Schedule',
     'rehearsal_days' => 'Rehearsal days',
     'add_rehearsal_day' => 'Add day',
+    'add_rehearsal' => 'New rehearsal',
     'date' => 'Date',
     'date_range' => 'Date range',
     'start_time' => 'Start',
