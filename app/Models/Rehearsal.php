@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -62,9 +64,69 @@ class Rehearsal extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    public function scopePublished($query)
+    #[Scope]
+    protected function published(Builder $query): void
     {
-        return $query->where('is_published', true);
+        $query->where('is_published', true);
+    }
+
+    #[Scope]
+    protected function drafts(Builder $query): void
+    {
+        $query->where('is_published', false);
+    }
+
+    #[Scope]
+    protected function upcoming(Builder $query): void
+    {
+        $query->where('end_date', '>=', today());
+    }
+
+    #[Scope]
+    protected function missingLocation(Builder $query): void
+    {
+        $query->where(function (Builder $query) {
+            $query
+                ->where(function (Builder $query) {
+                    self::applyMissingString($query, 'location_name');
+                })
+                ->orWhere(function (Builder $query) {
+                    self::applyMissingString($query, 'location_address');
+                });
+        });
+    }
+
+    #[Scope]
+    protected function missingPlan(Builder $query): void
+    {
+        $query->where(function (Builder $query) {
+            self::applyMissingString($query, 'plan_path');
+        });
+    }
+
+    #[Scope]
+    protected function missingDetails(Builder $query): void
+    {
+        $query->where(function (Builder $query) {
+            $query
+                ->drafts()
+                ->orWhere(function (Builder $query) {
+                    $query->missingLocation();
+                })
+                ->orWhere(function (Builder $query) {
+                    $query->missingPlan();
+                })
+                ->orWhereHas('days', fn (Builder $dayQuery) => $dayQuery->missingTimes());
+        });
+    }
+
+    private static function applyMissingString(Builder $query, string $column): void
+    {
+        $query->where(function (Builder $query) use ($column) {
+            $query
+                ->whereNull($column)
+                ->orWhere($column, '');
+        });
     }
 
     public static function upcomingCached(): Collection
@@ -78,7 +140,7 @@ class Rehearsal extends Model
                 return self::query()
                     ->with(['days' => fn ($query) => $query->orderBy('rehearsal_date')->orderBy('starts_at')])
                     ->published()
-                    ->where('end_date', '>=', today())
+                    ->upcoming()
                     ->orderBy('start_date')
                     ->get();
             }

@@ -105,4 +105,13 @@ return [
     'upcoming' => 'Bevorstehend',
     'past' => 'Vergangen',
     'past_rehearsals_hidden_hint' => 'Vergangene Proben (deren Enddatum überschritten ist) bleiben im öffentlichen Kalender unter Vergangen/Alle sichtbar und sind im Feed enthalten.',
+    'dashboard_upcoming_rehearsals' => 'Bevorstehende Proben',
+    'dashboard_rehearsal_status' => 'Probenstatus',
+    'dashboard_upcoming_published' => 'Bevorstehend (veröffentlicht)',
+    'dashboard_draft_rehearsals' => 'Entwürfe',
+    'dashboard_missing_location' => 'Ort fehlt',
+    'dashboard_missing_plan' => 'Plan fehlt',
+    'dashboard_missing_times' => 'Zeiten fehlen',
+    'dashboard_missing_details' => 'Fehlende Angaben',
+    'dashboard_missing_times_short' => 'Zeiten',
 ];
