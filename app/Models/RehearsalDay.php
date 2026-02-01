@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -39,6 +41,24 @@ class RehearsalDay extends Model
     public function rehearsal(): BelongsTo
     {
         return $this->belongsTo(Rehearsal::class);
+    }
+
+    #[Scope]
+    protected function missingTimes(Builder $query): void
+    {
+        $query->where(function (Builder $query) {
+            $query
+                ->where(function (Builder $query) {
+                    $query
+                        ->whereNull('starts_at')
+                        ->orWhere('starts_at', '');
+                })
+                ->orWhere(function (Builder $query) {
+                    $query
+                        ->whereNull('ends_at')
+                        ->orWhere('ends_at', '');
+                });
+        });
     }
 
     public function startDateTime(?string $timezone = null): Carbon

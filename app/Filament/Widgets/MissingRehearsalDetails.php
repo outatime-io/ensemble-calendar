@@ -27,29 +27,10 @@ class MissingRehearsalDetails extends TableWidget
         return $table
             ->query(fn (): Builder => Rehearsal::query()
                 ->withCount([
-                    'days as missing_times_count' => fn (Builder $query) => $query
-                        ->whereNull('starts_at')
-                        ->orWhere('starts_at', '')
-                        ->orWhereNull('ends_at')
-                        ->orWhere('ends_at', ''),
+                    'days as missing_times_count' => fn (Builder $query) => $query->missingTimes(),
                 ])
-                ->where('end_date', '>=', today())
-                ->where(function (Builder $query) {
-                    $query
-                        ->where('is_published', false)
-                        ->orWhereNull('location_name')
-                        ->orWhere('location_name', '')
-                        ->orWhereNull('location_address')
-                        ->orWhere('location_address', '')
-                        ->orWhereNull('plan_path')
-                        ->orWhere('plan_path', '')
-                        ->orWhereHas('days', fn (Builder $dayQuery) => $dayQuery
-                            ->whereNull('starts_at')
-                            ->orWhere('starts_at', '')
-                            ->orWhereNull('ends_at')
-                            ->orWhere('ends_at', '')
-                        );
-                })
+                ->upcoming()
+                ->missingDetails()
                 ->orderBy('start_date'))
             ->columns([
                 TextColumn::make('title')
