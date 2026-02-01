@@ -24,7 +24,7 @@ class RehearsalStatusOverview extends StatsOverviewWidget
                 __('app.dashboard_upcoming_published'),
                 Rehearsal::query()
                     ->published()
-                    ->where('end_date', '>=', today())
+                    ->upcoming()
                     ->count()
             )
                 ->icon(Heroicon::OutlinedCalendarDays)
@@ -32,8 +32,8 @@ class RehearsalStatusOverview extends StatsOverviewWidget
             Stat::make(
                 __('app.dashboard_draft_rehearsals'),
                 Rehearsal::query()
-                    ->where('is_published', false)
-                    ->where('end_date', '>=', today())
+                    ->drafts()
+                    ->upcoming()
                     ->count()
             )
                 ->icon(Heroicon::OutlinedEyeSlash)
@@ -41,14 +41,8 @@ class RehearsalStatusOverview extends StatsOverviewWidget
             Stat::make(
                 __('app.dashboard_missing_location'),
                 Rehearsal::query()
-                    ->where('end_date', '>=', today())
-                    ->where(function ($query) {
-                        $query
-                            ->whereNull('location_name')
-                            ->orWhere('location_name', '')
-                            ->orWhereNull('location_address')
-                            ->orWhere('location_address', '');
-                    })
+                    ->upcoming()
+                    ->missingLocation()
                     ->count()
             )
                 ->icon(Heroicon::OutlinedMapPin)
@@ -56,12 +50,8 @@ class RehearsalStatusOverview extends StatsOverviewWidget
             Stat::make(
                 __('app.dashboard_missing_plan'),
                 Rehearsal::query()
-                    ->where('end_date', '>=', today())
-                    ->where(function ($query) {
-                        $query
-                            ->whereNull('plan_path')
-                            ->orWhere('plan_path', '');
-                    })
+                    ->upcoming()
+                    ->missingPlan()
                     ->count()
             )
                 ->icon(Heroicon::OutlinedDocument)
@@ -69,14 +59,8 @@ class RehearsalStatusOverview extends StatsOverviewWidget
             Stat::make(
                 __('app.dashboard_missing_times'),
                 RehearsalDay::query()
-                    ->whereHas('rehearsal', fn ($query) => $query->where('end_date', '>=', today()))
-                    ->where(function ($query) {
-                        $query
-                            ->whereNull('starts_at')
-                            ->orWhere('starts_at', '')
-                            ->orWhereNull('ends_at')
-                            ->orWhere('ends_at', '');
-                    })
+                    ->whereHas('rehearsal', fn ($query) => $query->upcoming())
+                    ->missingTimes()
                     ->count()
             )
                 ->icon(Heroicon::OutlinedClock)

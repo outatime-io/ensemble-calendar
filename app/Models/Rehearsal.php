@@ -71,9 +71,37 @@ class Rehearsal extends Model
     }
 
     #[Scope]
+    protected function drafts(Builder $query): void
+    {
+        $query->where('is_published', false);
+    }
+
+    #[Scope]
     protected function upcoming(Builder $query): void
     {
         $query->where('end_date', '>=', today());
+    }
+
+    #[Scope]
+    protected function missingLocation(Builder $query): void
+    {
+        $query->where(function (Builder $query) {
+            $query
+                ->where(function (Builder $query) {
+                    self::applyMissingString($query, 'location_name');
+                })
+                ->orWhere(function (Builder $query) {
+                    self::applyMissingString($query, 'location_address');
+                });
+        });
+    }
+
+    #[Scope]
+    protected function missingPlan(Builder $query): void
+    {
+        $query->where(function (Builder $query) {
+            self::applyMissingString($query, 'plan_path');
+        });
     }
 
     #[Scope]
@@ -81,15 +109,12 @@ class Rehearsal extends Model
     {
         $query->where(function (Builder $query) {
             $query
-                ->where('is_published', false)
+                ->drafts()
                 ->orWhere(function (Builder $query) {
-                    self::applyMissingString($query, 'location_name');
+                    $query->missingLocation();
                 })
                 ->orWhere(function (Builder $query) {
-                    self::applyMissingString($query, 'location_address');
-                })
-                ->orWhere(function (Builder $query) {
-                    self::applyMissingString($query, 'plan_path');
+                    $query->missingPlan();
                 })
                 ->orWhereHas('days', fn (Builder $dayQuery) => $dayQuery->missingTimes());
         });
