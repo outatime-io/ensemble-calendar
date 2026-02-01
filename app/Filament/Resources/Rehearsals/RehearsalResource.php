@@ -87,7 +87,10 @@ class RehearsalResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return (string) static::getModel()::count();
+        return (string) static::getModel()::query()
+            ->published()
+            ->where('end_date', '>=', today())
+            ->count();
     }
 
     private static function syncDateRange(array $data): array
