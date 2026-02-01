@@ -105,4 +105,13 @@ return [
     'upcoming' => 'Upcoming',
     'past' => 'Past',
     'past_rehearsals_hidden_hint' => 'Past rehearsals (where the end date has passed) remain visible under Past/All in the public calendar and stay in the feed.',
+    'dashboard_upcoming_rehearsals' => 'Upcoming rehearsals',
+    'dashboard_rehearsal_status' => 'Rehearsal status',
+    'dashboard_upcoming_published' => 'Upcoming (published)',
+    'dashboard_draft_rehearsals' => 'Draft rehearsals',
+    'dashboard_missing_location' => 'Missing location',
+    'dashboard_missing_plan' => 'Missing plan',
+    'dashboard_missing_times' => 'Missing times',
+    'dashboard_missing_details' => 'Missing details',
+    'dashboard_missing_times_short' => 'Times',
 ];
