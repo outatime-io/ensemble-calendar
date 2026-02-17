@@ -1,6 +1,71 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended"
-  ]
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": [
+        "config:recommended",
+        ":dependencyDashboard"
+    ],
+    "enabledManagers": [
+        "composer",
+        "npm"
+    ],
+    "labels": [
+        "dependencies",
+        "renovate"
+    ],
+    "prConcurrentLimit": 8,
+    "prHourlyLimit": 2,
+    "rebaseWhen": "behind-base-branch",
+    "rangeStrategy": "bump",
+    "separateMajorMinor": true,
+    "separateMultipleMajor": true,
+    "lockFileMaintenance": {
+        "enabled": true,
+        "schedule": [
+            "before 4am on monday"
+        ]
+    },
+    "vulnerabilityAlerts": {
+        "enabled": true,
+        "labels": [
+            "dependencies",
+            "renovate",
+            "security"
+        ],
+        "prPriority": 10
+    },
+    "packageRules": [
+        {
+            "description": "Group all non-major Composer updates to reduce PR noise.",
+            "matchManagers": [
+                "composer"
+            ],
+            "matchUpdateTypes": [
+                "minor",
+                "patch",
+                "pin",
+                "digest"
+            ],
+            "groupName": "composer non-major dependencies"
+        },
+        {
+            "description": "Group all non-major npm updates to reduce PR noise.",
+            "matchManagers": [
+                "npm"
+            ],
+            "matchUpdateTypes": [
+                "minor",
+                "patch",
+                "pin",
+                "digest"
+            ],
+            "groupName": "npm non-major dependencies"
+        },
+        {
+            "description": "Require manual dashboard approval for major updates.",
+            "matchUpdateTypes": [
+                "major"
+            ],
+            "dependencyDashboardApproval": true
+        }
+    ]
 }
