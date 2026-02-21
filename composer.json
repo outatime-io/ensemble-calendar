@@ -5,23 +5,23 @@
     "keywords": ["laravel", "framework", "filament", "admin panel", "calendar", "rehearsal calendar", "rehearsal management", "rehearsal schedules", "musical ensemble", "ensemble", "theater"],
     "license": "MIT",
     "require": {
-        "php": "^8.2",
-        "filament/filament": "^4.0",
-        "laravel/framework": "^12.0",
-        "laravel/tinker": "^2.10.1",
+        "php": "^8.5.3",
+        "filament/filament": "^4.7.2",
+        "laravel/framework": "^12.52.0",
+        "laravel/tinker": "^2.11.1",
         "symfony/polyfill-intl-grapheme": "^1.33",
         "symfony/polyfill-intl-icu": "^1.33",
         "symfony/polyfill-intl-idn": "^1.33"
     },
     "require-dev": {
-        "fakerphp/faker": "^1.23",
-        "laravel/boost": "^1.8",
-        "laravel/pail": "^1.2.2",
-        "laravel/pint": "^1.24",
-        "laravel/sail": "^1.41",
-        "mockery/mockery": "^1.6",
-        "nunomaduro/collision": "^8.6",
-        "phpunit/phpunit": "^11.5.3"
+        "fakerphp/faker": "^1.24.1",
+        "laravel/boost": "^1.8.11",
+        "laravel/pail": "^1.2.6",
+        "laravel/pint": "^1.27.1",
+        "laravel/sail": "^1.53.0",
+        "mockery/mockery": "^1.6.12",
+        "nunomaduro/collision": "^8.9.1",
+        "phpunit/phpunit": "^11.5.55"
     },
     "autoload": {
         "psr-4": {
