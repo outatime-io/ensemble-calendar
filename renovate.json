@@ -30,8 +30,7 @@
             "dependencies",
             "renovate",
             "security"
-        ],
-        "prPriority": 10
+        ]
     },
     "packageRules": [
         {
